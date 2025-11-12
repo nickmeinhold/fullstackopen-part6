@@ -11,10 +11,11 @@ const getAll = async () => {
 };
 
 const createNew = async (content) => {
+  content.votes = 0;
   const response = await fetch(baseUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ content, important: false }),
+    body: JSON.stringify(content),
   });
 
   if (!response.ok) {
@@ -24,4 +25,18 @@ const createNew = async (content) => {
   return await response.json();
 };
 
-export default { getAll, createNew };
+const vote = async (id) => {
+  const response = await fetch(`${baseUrl}/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ id: id }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to vote");
+  }
+
+  return await response.json();
+};
+
+export default { getAll, createNew, vote };

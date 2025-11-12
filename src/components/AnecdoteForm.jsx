@@ -9,7 +9,7 @@ const AnecdoteForm = () => {
     const content = e.target.anecdote.value;
     if (content) {
       e.target.anecdote.value = "";
-      dispatch(appendAnecdote(content));
+      dispatch(appendAnecdote({ votes: 0, content }));
     }
   };
 
