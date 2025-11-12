@@ -4,9 +4,8 @@ const notificationSlice = createSlice({
   name: "notification",
   initialState: "",
   reducers: {
-    voteNotification(state, action) {
-      const anecdote = action.payload;
-      return `You voted for: '${anecdote}'`;
+    setNotificationMessage(state, action) {
+      return action.payload;
     },
     clearNotification() {
       return "";
@@ -14,6 +13,15 @@ const notificationSlice = createSlice({
   },
 });
 
-export const { voteNotification, clearNotification } =
+export const { setNotificationMessage, clearNotification } =
   notificationSlice.actions;
+
+// Thunk action creator
+export const setNotification = (message, seconds) => (dispatch) => {
+  dispatch(setNotificationMessage(message));
+  setTimeout(() => {
+    dispatch(clearNotification());
+  }, seconds * 1000);
+};
+
 export default notificationSlice.reducer;

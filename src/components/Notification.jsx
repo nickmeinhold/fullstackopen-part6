@@ -1,19 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { clearNotification } from "../reducers/notificationReducer";
+import { useSelector } from "react-redux";
 
 const Notification = () => {
-  const dispatch = useDispatch();
   const message = useSelector((state) => state.notification);
-
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => {
-        dispatch(clearNotification());
-      }, 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [message, dispatch]);
 
   if (!message) return null;
 
