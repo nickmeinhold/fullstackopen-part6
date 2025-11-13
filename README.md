@@ -20,12 +20,13 @@ This repository contains my solutions for Part 6 of the Fullstack Open course. E
     2. Install dependencies: `npm install`
     3. Start the app: `npm start`
 
-- **query-anecdotes** (or `part6` if renamed)
+- **query-anecdotes**
   - Exercises: 6.20–6.23
   - How to run:
-    1. Navigate to the folder: `cd query-anecdotes` (or `cd part6`)
+    1. Navigate to the folder: `cd query-anecdotes`
     2. Install dependencies: `npm install`
-    3. Start the app: `npm start`
+    3. Start the server: `npm run server`
+    4. Start the app: `npm run dev`
 
 ## Notes
 
