@@ -1,0 +1,4 @@
+# Root ignore rules for Part 6
+node_modules/
+.DS_Store
+.vscode/
