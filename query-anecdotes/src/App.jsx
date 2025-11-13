@@ -1,16 +1,28 @@
 import AnecdoteForm from "./components/AnecdoteForm";
 import Notification from "./components/Notification";
-import { useQuery } from "@tanstack/react-query";
-import { getAnecdotes } from "./requests";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { getAnecdotes, updateAnecdote } from "./requests";
 
 const App = () => {
+  const queryClient = useQueryClient();
+
   const handleVote = (anecdote) => {
-    console.log("vote");
+    updateAnecodeMutation.mutate({
+      ...anecdote,
+      votes: anecdote.votes + 1,
+    });
   };
 
   const result = useQuery({
     queryKey: ["anecdotes"],
     queryFn: getAnecdotes,
+  });
+
+  const updateAnecodeMutation = useMutation({
+    mutationFn: updateAnecdote,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["anecdotes"] });
+    },
   });
 
   console.log(JSON.parse(JSON.stringify(result)));
@@ -27,6 +39,8 @@ const App = () => {
 
   const anecdotes = result.data;
 
+  const sortedAnecdotes = [...anecdotes].sort((a, b) => b.votes - a.votes);
+
   return (
     <div>
       <h3>Anecdote app</h3>
@@ -34,7 +48,7 @@ const App = () => {
       <Notification />
       <AnecdoteForm />
 
-      {anecdotes.map((anecdote) => (
+      {sortedAnecdotes.map((anecdote) => (
         <div key={anecdote.id}>
           <div>{anecdote.content}</div>
           <div>
